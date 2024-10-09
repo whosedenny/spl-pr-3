@@ -59,7 +59,7 @@ function findAvailableClassrooms (timeSlot: TimeSlot, dayOfWeek: DayOfWeek) : Ar
 
 function getProfessorSchedule(professorId: number) : Array<Lesson>{
     const res: Array<Lesson> = [];
-    
+
     for(const lesson of schedule){
          if(lesson.professorId === professorId){
             res.push(lesson);
@@ -67,4 +67,31 @@ function getProfessorSchedule(professorId: number) : Array<Lesson>{
     }
 
     return res;
+}
+
+function validateLesson(lesson: Lesson): ScheduleConflict | null{
+   let schedulConflict: ScheduleConflict = {
+        type: "ProfessorConflict",
+        lessonDetails: lesson
+    };
+    
+    if (
+            lesson.professorId === lesson.professorId &&
+            lesson.dayOfWeek === lesson.dayOfWeek &&
+            lesson.timeSlot === lesson.timeSlot
+        ) {
+            schedulConflict.type = "ProfessorConflict";
+            return schedulConflict; 
+        }
+
+        if (
+            lesson.classroomNumber === lesson.classroomNumber &&
+            lesson.dayOfWeek === lesson.dayOfWeek &&
+            lesson.timeSlot === lesson.timeSlot
+        ) {
+            schedulConflict.type = "ClassroomConflict";
+            return schedulConflict;
+        }
+        
+    return null;
 }
