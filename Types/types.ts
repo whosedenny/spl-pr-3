@@ -11,8 +11,14 @@ type Professor = {
 }
 
 type Classroom = {
-    number: string,
-    capasity: string,
-    hasProfessor: boolean
+    number : string,
+    capasity : string,
+    hasProfessor : boolean
+}
+
+type Course = {
+    id : number,
+    name : string,
+    type : CourseType 
 }
 
