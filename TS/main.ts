@@ -83,3 +83,17 @@ function validateLesson(lesson: Lesson): ScheduleConflict | null{
     }
     return null;
 }
+
+function getClassroomUtilization(classroomNumber: string): number{
+    let countTimeSlotUse: number = 0;
+
+    for (const lesson of schedule) {
+        if (lesson.classroomNumber === classroomNumber) {
+            countTimeSlotUse++;
+        }
+    }
+
+    const res = (countTimeSlotUse / 25) * 100; // Тут 25 це максимальне можливе навантаження на класну кімнату(5 днів * на 5 можливих проміжков часу)
+
+    return res;
+}
