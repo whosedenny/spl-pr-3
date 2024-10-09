@@ -8,15 +8,14 @@ function addProfessor (professor: Professor): void {
 }
 
 function addLesson(lesson: Lesson): boolean {
-    for (const lessonFromSchedule of schedule) {
-        const conflictChecker: null | ScheduleConflict = validateLesson(lesson);
-        if(conflictChecker != null){
-            console.log("Конфлікт з уроком: " + conflictChecker.lessonDetails);
-            console.log("Тип конфлікту: " + conflictChecker.type);
-            return false;
-        }
-    }
+    const conflictChecker: null | ScheduleConflict = validateLesson(lesson);
     
+    if(conflictChecker != null){
+        console.log("Конфлікт з уроком: " + conflictChecker.lessonDetails);
+        console.log("Тип конфлікту: " + conflictChecker.type);
+        return false;
+    }
+
     schedule.push(lesson);
     return true; 
 }
@@ -63,24 +62,24 @@ function validateLesson(lesson: Lesson): ScheduleConflict | null{
         type: "ProfessorConflict",
         lessonDetails: lesson
     };
-    
-    if (
-            lesson.professorId === lesson.professorId &&
-            lesson.dayOfWeek === lesson.dayOfWeek &&
-            lesson.timeSlot === lesson.timeSlot
+    for (const lessonFromSchedule of schedule) {
+        if (
+            lesson.professorId === lessonFromSchedule.professorId &&
+            lesson.dayOfWeek === lessonFromSchedule.dayOfWeek &&
+            lesson.timeSlot === lessonFromSchedule.timeSlot
         ) {
             schedulConflict.type = "ProfessorConflict";
             return schedulConflict; 
         }
 
         if (
-            lesson.classroomNumber === lesson.classroomNumber &&
-            lesson.dayOfWeek === lesson.dayOfWeek &&
-            lesson.timeSlot === lesson.timeSlot
+            lesson.classroomNumber === lessonFromSchedule.classroomNumber &&
+            lesson.dayOfWeek === lessonFromSchedule.dayOfWeek &&
+            lesson.timeSlot === lessonFromSchedule.timeSlot
         ) {
             schedulConflict.type = "ClassroomConflict";
             return schedulConflict;
         }
-        
+    }
     return null;
 }
