@@ -56,3 +56,15 @@ function findAvailableClassrooms (timeSlot: TimeSlot, dayOfWeek: DayOfWeek) : Ar
 
     return res;
 }
+
+function getProfessorSchedule(professorId: number) : Array<Lesson>{
+    const res: Array<Lesson> = [];
+    
+    for(const lesson of schedule){
+         if(lesson.professorId === professorId){
+            res.push(lesson);
+         }
+    }
+
+    return res;
+}
