@@ -22,3 +22,10 @@ type Course = {
     type : CourseType 
 }
 
+type Lesson = {
+    courseId: number,
+    professorId: number,
+    classroomNumber: string,
+    dayOfWeek: DayOfWeek,
+    timeSlot: TimeSlot
+}
