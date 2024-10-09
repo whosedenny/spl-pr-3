@@ -9,25 +9,14 @@ function addProfessor (professor: Professor): void {
 
 function addLesson(lesson: Lesson): boolean {
     for (const lessonFromSchedule of schedule) {
-        if (
-            lessonFromSchedule.professorId === lesson.professorId &&
-            lessonFromSchedule.dayOfWeek === lesson.dayOfWeek &&
-            lessonFromSchedule.timeSlot === lesson.timeSlot
-        ) {
-            console.log("Викладач вже має заняття на цей час та день");
-            return false; 
-        }
-
-        if (
-            lessonFromSchedule.classroomNumber === lesson.classroomNumber &&
-            lessonFromSchedule.dayOfWeek === lesson.dayOfWeek &&
-            lessonFromSchedule.timeSlot === lesson.timeSlot
-        ) {
-            console.log("Цей клас занятий на цей час та день");
+        const conflictChecker: null | ScheduleConflict = validateLesson(lesson);
+        if(conflictChecker != null){
+            console.log("Конфлікт з уроком: " + conflictChecker.lessonDetails);
+            console.log("Тип конфлікту: " + conflictChecker.type);
             return false;
         }
     }
-
+    
     schedule.push(lesson);
     return true; 
 }
