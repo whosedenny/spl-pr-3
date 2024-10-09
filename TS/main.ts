@@ -6,3 +6,28 @@ let schedule: Array<Lesson> = [];
 function addProfessor (professor: Professor): void {
     professors.push(professor);
 }
+
+function addLesson(lesson: Lesson): boolean {
+    for (const lessonFromSchedule of schedule) {
+        if (
+            lessonFromSchedule.professorId === lesson.professorId &&
+            lessonFromSchedule.dayOfWeek === lesson.dayOfWeek &&
+            lessonFromSchedule.timeSlot === lesson.timeSlot
+        ) {
+            console.log("Викладач вже має заняття на цей час та день");
+            return false; 
+        }
+
+        if (
+            lessonFromSchedule.classroomNumber === lesson.classroomNumber &&
+            lessonFromSchedule.dayOfWeek === lesson.dayOfWeek &&
+            lessonFromSchedule.timeSlot === lesson.timeSlot
+        ) {
+            console.log("Цей клас занятий на цей час та день");
+            return false;
+        }
+    }
+
+    schedule.push(lesson);
+    return true; 
+}
