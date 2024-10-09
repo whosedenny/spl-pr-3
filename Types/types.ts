@@ -29,3 +29,8 @@ type Lesson = {
     dayOfWeek: DayOfWeek,
     timeSlot: TimeSlot
 }
+
+type ScheduleConflict = {
+    type: "ProfessorConflict" | "ClassroomConflict",
+    lessonDetails: Lesson
+}
