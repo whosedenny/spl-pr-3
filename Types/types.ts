@@ -9,3 +9,10 @@ type Professor = {
     name : string,
     department: string
 }
+
+type Classroom = {
+    number: string,
+    capasity: string,
+    hasProfessor: boolean
+}
+
