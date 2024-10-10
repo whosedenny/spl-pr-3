@@ -142,3 +142,31 @@ function getMostPopularCourseType(): CourseType {
 
     return res;
 }
+
+function reassignClassroom(lessonId: number, newClassroomNumber: string): boolean {
+    let lesson: Lesson | undefined = schedule.find(l => l.courseId === lessonId);
+    
+    if (!lesson) {
+        console.log("Невірний id уроку");
+        return false;
+    }
+
+    const oldClassroomNumber = lesson.classroomNumber;
+
+    lesson.classroomNumber = newClassroomNumber;
+
+    const conflictChecker: ScheduleConflict | null = validateLesson(lesson);
+
+    if (conflictChecker != null) {
+        console.log("Конфлікт з уроком: ", conflictChecker.lessonDetails);
+        console.log("Тип конфлікту: " + conflictChecker.type);
+
+        lesson.classroomNumber = oldClassroomNumber;
+
+        return false;
+    }
+
+    console.log("Аудиторія успішно змінена на: " + newClassroomNumber);
+    
+    return true;
+}
