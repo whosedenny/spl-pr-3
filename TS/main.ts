@@ -8,7 +8,7 @@ function addProfessor (professor: Professor): void {
 }
 
 function addLesson(lesson: Lesson): boolean {
-    const conflictChecker: null | ScheduleConflict = validateLesson(lesson);
+    const conflictChecker: null | ScheduleConflict = validateLesson(lesson); // Викликаємо метод перевірки на конфілкти
     
     if(conflictChecker != null){
         console.log("Конфлікт з уроком: " + conflictChecker.lessonDetails);
@@ -27,6 +27,7 @@ function findAvailableClassrooms (timeSlot: TimeSlot, dayOfWeek: DayOfWeek) : Ar
         let isAvailable = true;
 
         for (const lesson of schedule) {
+            //Перевірка класу на вільність
             if (
                 lesson.classroomNumber === classroom.number &&
                 lesson.dayOfWeek === dayOfWeek &&
@@ -58,11 +59,12 @@ function getProfessorSchedule(professorId: number) : Array<Lesson>{
 }
 
 function validateLesson(lesson: Lesson): ScheduleConflict | null{
-   let schedulConflict: ScheduleConflict = {
+   let schedulConflict: ScheduleConflict = {  // Задаємо за замовчуванням дані у змінну
         type: "ProfessorConflict",
         lessonDetails: lesson
     };
     for (const lessonFromSchedule of schedule) {
+        //Перевіряємо на конфілкти із професором
         if (
             lesson.professorId === lessonFromSchedule.professorId &&
             lesson.dayOfWeek === lessonFromSchedule.dayOfWeek &&
@@ -71,7 +73,7 @@ function validateLesson(lesson: Lesson): ScheduleConflict | null{
             schedulConflict.type = "ProfessorConflict";
             return schedulConflict; 
         }
-
+        //Перевіряємо на конфлікти із класом
         if (
             lesson.classroomNumber === lessonFromSchedule.classroomNumber &&
             lesson.dayOfWeek === lessonFromSchedule.dayOfWeek &&
@@ -104,6 +106,7 @@ function getMostPopularCourseType(): CourseType {
     let counterSeminar: number = 0;
     let counterPractice: number = 0;
 
+    //Підрахунок занять по типам
     for (const lesson of schedule) {
         const course = courses.find(c => c.id === lesson.courseId);
         if (course) {
@@ -155,7 +158,7 @@ function reassignClassroom(lessonId: number, newClassroomNumber: string): boolea
 
     lesson.classroomNumber = newClassroomNumber;
 
-    const conflictChecker: ScheduleConflict | null = validateLesson(lesson);
+    const conflictChecker: ScheduleConflict | null = validateLesson(lesson); //Викликаємо метод перевірки конфліктів
 
     if (conflictChecker != null) {
         console.log("Конфлікт з уроком: ", conflictChecker.lessonDetails);
