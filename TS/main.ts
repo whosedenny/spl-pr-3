@@ -171,3 +171,11 @@ function reassignClassroom(lessonId: number, newClassroomNumber: string): boolea
     return true;
 }
 
+function cancelLesson(lessonId: number): void{
+    const index : number = schedule.findIndex(l => l.lessonId === lessonId);
+    if(index === -1){
+        console.log("Невірний id уроку");
+    }else{
+        schedule.slice(index, 1)
+    }
+}
