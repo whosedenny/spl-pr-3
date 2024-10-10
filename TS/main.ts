@@ -167,6 +167,7 @@ function reassignClassroom(lessonId: number, newClassroomNumber: string): boolea
     }
 
     console.log("Аудиторія успішно змінена на: " + newClassroomNumber);
-    
+
     return true;
 }
+

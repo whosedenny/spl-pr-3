@@ -23,6 +23,7 @@ type Course = {
 }
 
 type Lesson = {
+    lessonId : number,
     courseId: number,
     professorId: number,
     classroomNumber: string,
