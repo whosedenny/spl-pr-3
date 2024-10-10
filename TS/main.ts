@@ -97,3 +97,48 @@ function getClassroomUtilization(classroomNumber: string): number{
 
     return res;
 }
+
+function getMostPopularCourseType(): CourseType {
+    let counterLab: number = 0;
+    let counterLecture: number = 0;
+    let counterSeminar: number = 0;
+    let counterPractice: number = 0;
+
+    for (const lesson of schedule) {
+        const course = courses.find(c => c.id === lesson.courseId);
+        if (course) {
+            switch (course.type) {
+                case "Lab":
+                    counterLab++;
+                    break;
+                case "Lecture":
+                    counterLecture++;
+                    break;
+                case "Seminar":
+                    counterSeminar++;
+                    break;
+                case "Practice":
+                    counterPractice++;
+                    break;
+            }
+        }
+    }
+
+    let res: CourseType = "Lecture"; 
+    let maxCount = counterLecture;
+
+    if (counterLab > maxCount) {
+        res = "Lab";
+        maxCount = counterLab;
+    }
+    if (counterSeminar > maxCount) {
+        res = "Seminar";
+        maxCount = counterSeminar;
+    }
+    if (counterPractice > maxCount) {
+        res = "Practice";
+        maxCount = counterPractice;
+    }
+
+    return res;
+}
