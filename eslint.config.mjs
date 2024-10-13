@@ -11,7 +11,13 @@ export default {
   files: ["**/*.{js,mjs,cjs,ts}"],
   languageOptions: {
     ecmaVersion: 2020,  
-    globals: globals.browser,  
+    globals: {
+    ...globals.browser,
+    ...globals.node,
+   },
+   parserOptions: {
+    project: ['tsconfig.json', 'tsconfig.app.json', 'tsconfig.node.json'],
+   },
   },
   plugins: {
     prettier, 
